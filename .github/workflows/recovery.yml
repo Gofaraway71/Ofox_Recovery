@@ -3,12 +3,6 @@ name: Building recovery
 on: workflow_dispatch
 
 env:
-  MANIFEST: https://gitlab.com/OrangeFox/Manifest.git -b fox_9.0
-  DEVICE: jasmine_sprout
-  DT_LINK: https://github.com/Manish4586/android_device_xiaomi_jasmine_sprout-twrp
-  DT_PATH: device/xiaomi/jasmine_sprout
-#  KERNEL_LINK: https://github.com/Pulkit077/kernel_xiaomi_rosy
-#  KERNEL_PATH: kernel/xiaomi/rosy
   TARGET: recoveryimage
   TZ: Asia/Kolkata
 
@@ -19,7 +13,7 @@ jobs:
     steps:
        - name: Checkout
          uses: actions/checkout@master
-         
+       
        - name: Initializing environment
          run: |
             sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d
@@ -33,23 +27,22 @@ jobs:
             sudo -E apt-get -qq install bc build-essential zip curl libstdc++6 git wget python gcc clang libssl-dev repo rsync flex curl  bison aria2
             sudo curl --create-dirs -L -o /usr/local/bin/repo -O -L https://storage.googleapis.com/git-repo-downloads/repo
             sudo chmod a+rx /usr/local/bin/repo
-            
+           
        - name: Sync recovery source and device tree
          run: |
              mkdir work
              cd work
-             repo init -u $MANIFEST --depth=1 --groups=all,-notdefault,-device,-darwin,-x86,-mips
-             repo sync -j4
-             git clone $DT_LINK --depth=1 --single-branch $DT_PATH
-#            git clone $KERNEL_LINK --depth=1 --single-branch $KERNEL_PATH
-             
+             repo init -u https://gitlab.com/OrangeFox/Manifest.git -b fox_9.0 --depth=1
+             repo sync -c -f -q --force-sync --no-clone-bundle --no-tags -j$(nproc --all)
+             git clone https://github.com/Manish4586/android_device_xiaomi_jasmine_sprout-twrp device/xiaomi/jasmine_sprout
+           
        - name: Build
          run: |
               cd work
               . build/envsetup.sh
-              export OF_MAINTAINER="Samyak , Ryukendo9" && export OF_AB_DEVICE=1 &&export ALLOW_MISSING_DEPENDENCIES=true &&export FOX_USE_TWRP_RECOVERY_IMAGE_BUILDER=1 &&export FOX_R11=1 &&export FOX_ADVANCED_SECURITY=1 &&export FOX_REPLACE_BUSYBOX_PS=1 &&export FOX_REPLACE_TOOLBOX_GETPROP=1 &&export FOX_USE_TAR_BINARY=1 &&export FOX_USE_NANO_EDITOR=1 &&export FOX_VERSION="Unofficial" &&export OF_USE_TWRP_SAR_DETECT=1 &&export OF_USE_MAGISKBOOT=1 &&export OF_USE_MAGISKBOOT_FOR_ALL_PATCHES=1 &&export OF_NO_SAMSUNG_SPECIAL=1 &&export OF_DISABLE_MIUI_SPECIFIC_FEATURES=1 &&export OF_OTA_BACKUP_STOCK_BOOT_IMAGE=1 &&export OF_SKIP_MULTIUSER_FOLDERS_BACKUP=1 &&export OF_PATCH_AVB20=1 &&export OF_SUPPORT_PRE_FLASH_SCRIPT=1 &&export OF_DONT_KEEP_LOG_HISTORY=1 &&export OF_HIDE_NOTCH=1 &&export OF_STATUS_INDENT_LEFT=48 &&export OF_STATUS_INDENT_RIGHT=48 &&export OF_SCREEN_H=2160 &&export OF_FBE_METADATA_MOUNT_IGNORE=1 &&export OF_CHECK_OVERWRITE_ATTEMPTS=1 &&export LC_ALL="C"
-              lunch omni_$DEVICE-eng 
-              mka $TARGET
+              export OF_MAINTAINER="Samyak , Ryukendo9" && export OF_AB_DEVICE=1 && export ALLOW_MISSING_DEPENDENCIES=true && export FOX_USE_TWRP_RECOVERY_IMAGE_BUILDER=1 && export FOX_R11=1 &&export FOX_VERSION="Unofficial" && export OF_STATUS_INDENT_LEFT=48 &&export OF_STATUS_INDENT_RIGHT=48 &&export OF_SCREEN_H=2160 
+              lunch omni_jasmine_sprout-eng 
+              mka recoveryimage
              
        - name: Upload recovery image
          run: |
