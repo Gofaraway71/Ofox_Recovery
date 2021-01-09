@@ -30,23 +30,4 @@ jobs:
            
        - name: Sync recovery source and device tree
          run: |
-             cd
-             mkdir ~/OrangeFox_10
-             cd ~/OrangeFox_10
-             rsync rsync://sources.orangefox.download/sources/fox_10.0 . --progress -a
-             git clone https://github.com/Rahuh-960/lancelot.git device/xiaomi/lancelot
-           
-       - name: Build
-         run: |
-              cd
-              cd OrangeFox_10
-              . build/envsetup.sh
-              export OF_MAINTAINER="Samyak , Ryukendo9" && export ALLOW_MISSING_DEPENDENCIES=true && export FOX_USE_TWRP_RECOVERY_IMAGE_BUILDER=1 && export LC_ALL="C" 
-              lunch omni_lancelot-eng 
-              mka recoveryimage
-             
-       - name: Upload recovery image
-         run: |
-              cd work/out/target/product/lancelot
-              curl -sL https://git.io/file-transfer | sh
-              ./transfer bit *.zip    
+             ls
