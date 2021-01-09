@@ -39,8 +39,8 @@ jobs:
             bash bin/scripts/setup/android_build_env.sh
             bash bin/scripts/setup/install_android_sdk.sh
    
-       - name: Sync recovery source and device tree
-         run: |
+        - name: Sync recovery source and device tree
+          run: |
             cd
             mkdir OrangeFox
             cd OrangeFox
@@ -50,8 +50,8 @@ jobs:
             cd OrangeFox
             git clone https://github.com/Manish4586/android_device_xiaomi_jasmine_sprout-twrp device/xiaomi/jasmine_sprout
             
-       - name: Now Lets build Ofox
-        run: |
+        - name: Now Lets build Ofox
+         run: |
             cd
             cd OrangeFox
             source build/envsetup.sh
