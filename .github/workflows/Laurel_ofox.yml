@@ -49,7 +49,7 @@ jobs:
             repo sync -j8 --force-sync --optimized-fetch --no-clone-bundle
             cd
             cd OrangeFox
-            git clone https://github.com/SebaUbuntu-Recovery-Lab/android_device_xiaomi_laurel_sprout device/xiaomi/laurel
+            git clone https://github.com/SebaUbuntu-Recovery-Lab/android_device_xiaomi_laurel_sprout device/xiaomi/laurel_sprout
             
       - name: Now Lets build Ofox
         run: |
@@ -61,15 +61,15 @@ jobs:
             export LC_ALL="C"
             export OF_MAINTAINER="Samyak , Ryukendo9"
             export FOX_VERSION="Unofficial"
-            lunch omni_laurel-eng
+            lunch omni_laurel_sprout-eng
             mka recoveryimage
       
       - name: Uploading using Bash Upload
         run: |
             cd
-            mv OrangeFox/out/target/product/laurel/OrangeFox-Unofficial-laurel.img ~
-            mv OrangeFox/out/target/product/laurel/OrangeFox-Unofficial-laurel.zip ~
-            curl https://bashupload.com/Ofox-Unofficial_laurel.zip --data-binary @OrangeFox-Unofficial-laurel.zip
-            curl https://bashupload.com/Ofox-Unofficial_laurel.img --data-binary @OrangeFox-Unofficial-laurel.img
+            mv OrangeFox/out/target/product/laurel/OrangeFox-Unofficial-laurel_sprout.img ~
+            mv OrangeFox/out/target/product/laurel/OrangeFox-Unofficial-laurel_sprout.zip ~
+            curl https://bashupload.com/Ofox-Unofficial_laurel_sprout.zip --data-binary @OrangeFox-Unofficial-laurel_sprout.zip
+            curl https://bashupload.com/Ofox-Unofficial_laurel_sprout.img --data-binary @OrangeFox-Unofficial-laurel_sprout.img
             
             
