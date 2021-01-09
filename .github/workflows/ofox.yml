@@ -1,4 +1,4 @@
-name: Building OrangeFox Recovery without any PC 
+name: ofox 
 
 on: workflow_dispatch
 
