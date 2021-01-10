@@ -49,12 +49,13 @@ jobs:
             repo sync -j8 --force-sync --optimized-fetch --no-clone-bundle
             cd
             cd OrangeFox
-            git clone https://github.com/SHRP-Devices/device_xiaomi_laurel_sprout device/xiaomi/laurel_sprout
+            git clone https://github.com/Rahuh-960/laurel_sprout device/xiaomi/laurel_sprout
             
       - name: Now Lets build Ofox
         run: |
             cd
             cd OrangeFox
+            git clone https://github.com/TeamWin/external_magisk-prebuilt external/magisk-prebuilt
             source build/envsetup.sh
             export ALLOW_MISSING_DEPENDENCIES=true
             export FOX_USE_TWRP_RECOVERY_IMAGE_BUILDER=1
