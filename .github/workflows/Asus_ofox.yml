@@ -68,8 +68,8 @@ jobs:
       - name: Uploading using Bash Upload
         run: |
             cd
-            mv OrangeFox/out/target/product/wayne/OrangeFox-Unofficial-a001d.img ~
-            mv OrangeFox/out/target/product/wayne/OrangeFox-Unofficial-a001d.zip ~
+            mv OrangeFox/out/target/product/a001d/OrangeFox-Unofficial-a001d.img ~
+            mv OrangeFox/out/target/product/a001d/OrangeFox-Unofficial-a001d.zip ~
             curl https://bashupload.com/Ofox-Unofficial.zip --data-binary @OrangeFox-Unofficial-a001d.zip
             curl https://bashupload.com/Ofox-Unofficial.img --data-binary @OrangeFox-Unofficial-a001d.img
             
